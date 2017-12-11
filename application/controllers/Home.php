@@ -21,5 +21,7 @@ class Home extends CI_Controller {
 	public function index()
 	{
 		echo "aaaa";
+		$this->load->library('CI_Wechat');
+		echo "bbbb";
 	}
 }
