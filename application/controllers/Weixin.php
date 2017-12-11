@@ -22,12 +22,12 @@ class Weixin extends CI_Controller{
      *微信入口方法，对微信端进入的数据进行响应
      */
     public function index(){
-        $this->ci_wechat->valid();
-        $type = $this->ci_wechat->getRev()->getRevType();
-        $content = $this->ci_wechat->getRevContent();
-        $openid = $this->ci_wechat->getRevFrom();
-        $time = $this->ci_wechat->getRevCtime();
-        $enent = $this->ci_wechat->getRevEvent();
+        // $this->ci_wechat->valid();
+        // $type = $this->ci_wechat->getRev()->getRevType();
+        // $content = $this->ci_wechat->getRevContent();
+        // $openid = $this->ci_wechat->getRevFrom();
+        // $time = $this->ci_wechat->getRevCtime();
+        // $enent = $this->ci_wechat->getRevEvent();
 
 
         $this->ci_wechat->text('系统异常，请联系管理员')->reply();
