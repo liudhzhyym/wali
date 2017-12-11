@@ -41,6 +41,9 @@
  *  		);
  *   $result = $weObj->createMenu($newmenu);
  */
+ 
+ 
+ 
 class Wechat
 {
 	const MSGTYPE_TEXT = 'text';
@@ -312,7 +315,8 @@ class Wechat
         		if ($this->checkSignature())
         			die($echoStr);
         		else
-        			die('no access');
+        		    show_404();
+//        			die('no access');
         	}
         }
 
@@ -320,7 +324,8 @@ class Wechat
         	if ($return)
         		return false;
         	else
-        		die('no access');
+        	    show_404();
+//        		die('no access');
         }
         return true;
     }
@@ -1715,7 +1720,7 @@ class Wechat
 			if (!$json || !empty($json['errcode'])) {
 				$this->errCode = $json['errcode'];
 				$this->errMsg = $json['errmsg'];
-				return false;
+				return $json;
 			}
 			return $json;
 		}
@@ -1822,7 +1827,7 @@ class Wechat
             if (!$json || !empty($json['errcode'])) {
                 $this->errCode = $json['errcode'];
                 $this->errMsg = $json['errmsg'];
-                return false;
+                return $json;
             }
             return $json;
         }
@@ -1986,7 +1991,7 @@ class Wechat
 			if (!$json || !empty($json['errcode'])) {
 				$this->errCode = $json['errcode'];
 				$this->errMsg = $json['errmsg'];
-				return false;
+				return $json;
 			}
 			return $json;
 		}
@@ -2050,7 +2055,7 @@ class Wechat
 			if (!$json || !empty($json['errcode'])) {
 				$this->errCode = $json['errcode'];
 				$this->errMsg = $json['errmsg'];
-				return false;
+				return $json;
 			}
 			return $json;
 		}
@@ -2083,7 +2088,7 @@ class Wechat
 			if (!$json || !empty($json['errcode'])) {
 				$this->errCode = $json['errcode'];
 				$this->errMsg = $json['errmsg'];
-				return false;
+				return $json;
 			}
 			return $json;
 		}
@@ -2170,7 +2175,7 @@ class Wechat
 	 * 创建二维码ticket
 	 * @param int|string $scene_id 自定义追踪id,临时二维码只能用数值型
 	 * @param int $type 0:临时二维码；1:数值型永久二维码(此时expire参数无效)；2:字符串型永久二维码(此时expire参数无效)
-	 * @param int $expire 临时二维码有效期，最大为604800秒
+	 * @param int $expire 临时二维码有效期，最大为2592000秒
 	 * @return array('ticket'=>'qrcode字串','expire_seconds'=>604800,'url'=>'二维码图片解析后的地址')
 	 */
 	public function getQRCode($scene_id,$type=0,$expire=604800){
@@ -2549,7 +2554,7 @@ class Wechat
 	 * @param string $callback 回调URI
 	 * @return string
 	 */
-	public function getOauthRedirect($callback,$state='',$scope='snsapi_userinfo'){
+	public function getOauthRedirect($callback,$state='',$scope='snsapi_base'){
 		return self::OAUTH_PREFIX.self::OAUTH_AUTHORIZE_URL.'appid='.$this->appid.'&redirect_uri='.urlencode($callback).'&response_type=code&scope='.$scope.'&state='.$state.'#wechat_redirect';
 	}
 
@@ -2723,7 +2728,8 @@ class Wechat
 				$this->errMsg = $json['errmsg'];
 				return false;
 			}
-			return $json;
+//			return $json;
+            return true;
 		}
 		return false;
 	}
@@ -2783,7 +2789,7 @@ class Wechat
 			if (!$json || !empty($json['errcode'])) {
 				$this->errCode = $json['errcode'];
 				$this->errMsg = $json['errmsg'];
-				return false;
+				return $json;
 			}
 			return $json;
 		}
