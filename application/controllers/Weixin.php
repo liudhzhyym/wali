@@ -30,18 +30,6 @@ class Weixin extends CI_Controller{
         $enent = $this->ci_wechat->getRevEvent();
 
 
-        /*
-         * 对微信端的时间类型进行响应
-         * */
-        switch($type){
-            /*
-             * 如果用户给我们发送文字消息，我们的响应内容如下
-             * */
-            case Wechat::MSGTYPE_TEXT;
-                $this->ci_wechat->text('系统异常，请联系管理员')->reply();
-                break;
-            default:
-                break;
-        }
+        $this->ci_wechat->text('系统异常，请联系管理员')->reply();
     }
 }
