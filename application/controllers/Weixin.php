@@ -100,7 +100,7 @@ class Weixin extends CI_Controller{
             $txt = "<a href='{$url}'>{$key} {$name}</a>";
             $infoList[] = $txt;
         }
-        $infoList = array_slice($infoList, 0 , 10);
+        $infoList = array_slice($infoList, 0 , 5);
         $html = implode("  ",$infoList);
         return $html;
     }
