@@ -101,7 +101,7 @@ class Weixin extends CI_Controller{
             $infoList[] = $txt;
         }
         $infoList = array_slice($infoList, 0 , 5);
-        $html = implode("<br>",$infoList);
+        $html = implode("  ",$infoList);
         return $html;
     }
 
