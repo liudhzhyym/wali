@@ -22,7 +22,7 @@ class Weixin extends CI_Controller{
      *微信入口方法，对微信端进入的数据进行响应
      */
     public function index(){
-        // $this->ci_wechat->valid();
+        $this->ci_wechat->valid();
         // $type = $this->ci_wechat->getRev()->getRevType();
         // $content = $this->ci_wechat->getRevContent();
         // $openid = $this->ci_wechat->getRevFrom();
