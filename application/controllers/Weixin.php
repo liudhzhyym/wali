@@ -91,7 +91,7 @@ class Weixin extends CI_Controller{
         //     $b,
         // );
 
-        $base = 'http://yun.mt2t.com/yun?url=';
+        $base = 'http://jx.vgoodapi.com/jx.php?url=';
         $infoList = array();
         foreach($jishu as $index => $value) {
             $name = $value;
