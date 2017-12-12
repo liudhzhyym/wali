@@ -134,7 +134,7 @@ class Weixin extends CI_Controller{
             case Wechat::MSGTYPE_TEXT;
 
                 $html = $this->getList($content);
-                $this->ci_wechat->text($htcontentml)->reply();
+                $this->ci_wechat->text($html)->reply();
                 break;
 
             /*
