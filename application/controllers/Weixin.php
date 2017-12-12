@@ -22,13 +22,15 @@ class Weixin extends CI_Controller{
      *微信入口方法，对微信端进入的数据进行响应
      */
     public function index(){
+        log_message("debug","123");
         $this->ci_wechat->valid();
-        // $type = $this->ci_wechat->getRev()->getRevType();
+        $type = $this->ci_wechat->getRev()->getRevType();
         // $content = $this->ci_wechat->getRevContent();
         // $openid = $this->ci_wechat->getRevFrom();
         // $time = $this->ci_wechat->getRevCtime();
         // $enent = $this->ci_wechat->getRevEvent();
 
+        log_message("debug","type is [$type]");
 
         $this->ci_wechat->text('123')->reply();
     }
