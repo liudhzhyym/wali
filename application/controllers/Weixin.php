@@ -97,11 +97,11 @@ class Weixin extends CI_Controller{
             $name = $value;
             $url = $b[$index];
             $url = $base . $url;
-            $txt = "<a href='{$url}'>{$key} {$name}</a>";
+            $txt = "<a href='{$url}'>{$key}{$name}</a>";
             $infoList[] = $txt;
         }
-        $infoList = array_slice($infoList, -5);
-        $html = implode("  ",$infoList);
+        $infoList = array_slice($infoList, -10);
+        $html = implode(" ",$infoList);
         return $html;
     }
 
