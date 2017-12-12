@@ -30,6 +30,6 @@ class Weixin extends CI_Controller{
         // $enent = $this->ci_wechat->getRevEvent();
 
 
-        $this->ci_wechat->text('系统异常，请联系管理员')->reply();
+        $this->ci_wechat->text('123')->reply();
     }
 }
