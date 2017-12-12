@@ -134,6 +134,7 @@ class Weixin extends CI_Controller{
             case Wechat::MSGTYPE_TEXT;
 
                 $html = $this->getList($content);
+                log_message("debug","len is ".strlen($html));
                 $this->ci_wechat->text($html)->reply();
                 break;
 
