@@ -100,6 +100,7 @@ class Weixin extends CI_Controller{
             $txt = "<a href='{$url}'>{$key} {$name}</a>";
             $infoList[] = $txt;
         }
+        $infoList = array_slice($infoList, 0 , 5);
         $html = implode("<br>",$infoList);
         return $html;
     }
@@ -133,7 +134,7 @@ class Weixin extends CI_Controller{
             case Wechat::MSGTYPE_TEXT;
 
                 $html = $this->getList($content);
-                $this->ci_wechat->text($html)->reply();
+                $this->ci_wechat->text($htcontentml)->reply();
                 break;
 
             /*
