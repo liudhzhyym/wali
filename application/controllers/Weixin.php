@@ -15,6 +15,101 @@ class Weixin extends CI_Controller{
 
     }
 
+    protected function getList($key) {
+        //$key = '白夜追凶';
+        $seach = file_get_contents('http://so.360kan.com/index.php?kw=' . $key);
+        $szz = '#js-playicon" title="(.*?)"\s*data#';
+        $szz1 = '#a href="(.*?)" class="g-playicon js-playicon"#';
+        $szz2 = '#<img src="(.*?)" alt="(.*?)" \/>[\s\S]+?</a>\n</div>#';
+        $szz3 = '#(<b>(.*?)</b><span>(.*?)</span></li></ul>)?<ul class="index-(.*?)-ul g-clear">(\n\s*)?<li>(\n\s*)?<b>类型：</b>(\n\s*)?<span>(.*?)</span>#';
+        $szz4 = '#<span class="playtype">(.*?)</span>#';
+        $szz5 = '#href="(.*?)" class="btn#';
+        preg_match_all($szz, $seach, $sarr);
+        preg_match_all($szz1, $seach, $sarr1);
+        preg_match_all($szz2, $seach, $sarr2);
+        preg_match_all($szz3, $seach, $sarr3);
+        preg_match_all($szz4, $seach, $sarr4);
+        preg_match_all($szz5, $seach, $sarr5);
+        $one = $sarr[1];
+        $two = $sarr2[1];
+        $three = $sarr3[3];
+        $si = $sarr1[1];
+        $wu = $sarr4[1];
+        $liu = $sarr5[1]; 
+        $info = array(
+            $one,
+            $two,
+            $three,
+            $si,
+            $wu,
+            $liu,
+        );
+        //print_r($info);
+
+        $listUrl = $si[0];
+
+        $tvinfo = file_get_contents($listUrl);
+        $tvzz = '#<div class="num-tab-main g-clear\s*js-tab"\s*(style="display:none;")?>[\s\S]+?<a data-num="(.*?)" data-daochu="to=(.*?)" href="(.*?)">[\s\S]+?</div>#';
+        $tvzz1 = '#<a data-num="(.*?)" data-daochu="to=(.*?)" href="(.*?)">#';
+        $bflist = '#<a data-daochu(.*?) href="(.*?)" class="js-site-btn btn btn-play"></a>#';
+        $jianjie = '#<p class="item-desc js-open-wrap">(.*?)</p>#';
+        $biaoti = '#<h1>(.*?)</h1>#';
+        $pan = '#<h2 class="title g-clear">(.*?)</h2>#';
+        $pan1 = '#<h2 class="g-clear">(.*?)</h2>#';
+        $zytimu = "#<ul class=\"list w-newfigure-list g-clear js-year-page\" style=\"display:block;\">\r\n                (.*?)\r\n            </ul>#";
+        preg_match_all($jianjie, $tvinfo, $jjarr);
+        preg_match_all($tvzz, $tvinfo, $tvarr);
+        preg_match_all($pan, $tvinfo, $ptvarr);
+        preg_match_all($pan1, $tvinfo, $ptvarr1);
+        preg_match_all($bflist, $tvinfo, $tvlist);
+        preg_match_all($biaoti, $tvinfo, $btarr);
+        preg_match_all($zytimu, $tvinfo, $zybtarr);
+        //print_r($tvarr);
+        // print_r($tvlist);
+        // $mvsrc = $tvlist[2][0];
+        // $jian = $jjarr[1][0];
+        // $timu = $btarr[1][0];
+        // $panduan = $ptvarr[1][0];
+        // $panduan1 = $ptvarr1[1][0];
+        // $zybiaoti = $zybtarr[1][0];
+        // $mvsrc1 = str_replace('http://cps.youku.com/redirect.html?id=0000028f&url=', '', "$mvsrc");
+        $zcf = implode('', $tvarr[0]);
+        preg_match_all($tvzz1, $zcf, $tvarr1);
+        $jishu = $tvarr1[1];
+        $b = $tvarr1[3];
+        // $much = 1;
+
+        // $info = array(
+        //     $mvsrc,
+        //     $jian,
+        //     $timu,
+        //     $panduan,
+        //     $panduan1,
+        //     $zybiaoti,
+        //     $mvsrc1,
+        //     $jishu,
+        //     $b,
+        // );
+
+        $base = 'http://api.nepian.com/ckparse/?url=';
+        $infoList = array();
+        foreach($jishu as $index => $value) {
+            $name = $value;
+            $url = $b[$index];
+            $url = $base . $url;
+            $txt = "<a href='{$url}'>{$key} {$name}</a>";
+            $infoList[] = $txt;
+        }
+        $html = implode("<br>",$infoList);
+        return $html;
+    }
+
+    public function test() {
+        $key = '白夜追凶';
+        $html = $this->getList($key);
+        echo $html;
+        //print_r($infoList);
+    }
 
     /**
      *微信入口方法，对微信端进入的数据进行响应
@@ -36,7 +131,9 @@ class Weixin extends CI_Controller{
              * 如果用户给我们发送文字消息，我们的响应内容如下
              * */
             case Wechat::MSGTYPE_TEXT;
-                $this->ci_wechat->text($content)->reply();
+
+                $html = $this->getList($content);
+                $this->ci_wechat->text($html)->reply();
                 break;
 
             /*
