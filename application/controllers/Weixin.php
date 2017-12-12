@@ -91,7 +91,7 @@ class Weixin extends CI_Controller{
         //     $b,
         // );
 
-        $base = 'http://api.nepian.com/ckparse/?url=';
+        $base = 'http://yun.mt2t.com/yun?url=';
         $infoList = array();
         foreach($jishu as $index => $value) {
             $name = $value;
