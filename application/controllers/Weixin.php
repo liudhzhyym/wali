@@ -108,7 +108,7 @@ class Weixin extends CI_Controller{
         //print_r($info);
 
 
-        $title = $timu[2];
+        $title = $timu[0];
 
         $base = 'http://jx.vgoodapi.com/jx.php?url=';
 
