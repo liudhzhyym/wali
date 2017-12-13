@@ -112,6 +112,13 @@ class Weixin extends CI_Controller{
         //print_r($infoList);
     }
 
+    public function test1() {
+        echo "aaaa";
+        $this->ci_wechat->valid();
+        echo "bbbb";
+        //print_r($infoList);
+    }
+
     /**
      *微信入口方法，对微信端进入的数据进行响应
      */
