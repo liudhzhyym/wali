@@ -106,7 +106,7 @@ class Weixin extends CI_Controller{
     }
 
     public function test() {
-        $key = '白夜追凶';
+        $key = '盗梦空间';
         $html = $this->getList($key);
         echo $html;
         //print_r($infoList);
@@ -142,6 +142,10 @@ class Weixin extends CI_Controller{
 
                 $html = $this->getList($content);
                 log_message("debug","len is ".strlen($html));
+                if(empty($html)) {
+                    $html = "没有找到资源 = =";
+                }
+                
                 $this->ci_wechat->text($html)->reply();
                 break;
 
