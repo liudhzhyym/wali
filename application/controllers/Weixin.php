@@ -108,12 +108,14 @@ class Weixin extends CI_Controller{
         //print_r($info);
 
 
+        $title = $timu[2];
+
         $base = 'http://jx.vgoodapi.com/jx.php?url=';
 
         $infoList = array();
         if(empty($panduan)&&empty($panduan1)) {
             $url = $base . $mvsrc1;
-            $txt = "<a href='{$url}'>{$key}</a>";
+            $txt = "<a href='{$url}'>{$title}</a>";
             $infoList[] = $txt;
         }
         else {
@@ -121,7 +123,7 @@ class Weixin extends CI_Controller{
                 $name = $value;
                 $url = $b[$index];
                 $url = $base . $url;
-                $txt = "<a href='{$url}'>{$key}{$name}</a>";
+                $txt = "<a href='{$url}'>{$title}{$name}</a>";
                 $infoList[] = $txt;
             }
             $infoList = array_slice($infoList, -10);
