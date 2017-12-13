@@ -18,6 +18,7 @@ class Weixin extends CI_Controller{
     protected function getList($key) {
         //$key = '白夜追凶';
         $seach = file_get_contents('http://so.360kan.com/index.php?kw=' . $key);
+        //print_r($seach);
         $szz = '#js-playicon" title="(.*?)"\s*data#';
         $szz1 = '#a href="(.*?)" class="g-playicon js-playicon"#';
         $szz2 = '#<img src="(.*?)" alt="(.*?)" \/>[\s\S]+?</a>\n</div>#';
@@ -64,49 +65,75 @@ class Weixin extends CI_Controller{
         preg_match_all($bflist, $tvinfo, $tvlist);
         preg_match_all($biaoti, $tvinfo, $btarr);
         preg_match_all($zytimu, $tvinfo, $zybtarr);
-        //print_r($tvarr);
+        $info = array(
+            $jjarr,
+            $tvarr,
+            $ptvarr,
+            $ptvarr1,
+            $tvlist,
+            $btarr,
+            $zybtarr,
+        );
+
         // print_r($tvlist);
-        // $mvsrc = $tvlist[2][0];
-        // $jian = $jjarr[1][0];
-        // $timu = $btarr[1][0];
-        // $panduan = $ptvarr[1][0];
-        // $panduan1 = $ptvarr1[1][0];
-        // $zybiaoti = $zybtarr[1][0];
-        // $mvsrc1 = str_replace('http://cps.youku.com/redirect.html?id=0000028f&url=', '', "$mvsrc");
+
+
+
+        // return;
+        // print_r($tvlist);
+        $mvsrc = $tvlist[2][0];
+        $jian = $jjarr[1][0];
+        $timu = $btarr[1][0];
+        $panduan = $ptvarr[1][0];
+        $panduan1 = $ptvarr1[1][0];
+        $zybiaoti = $zybtarr[1][0];
+        $mvsrc1 = str_replace('http://cps.youku.com/redirect.html?id=0000028f&url=', '', "$mvsrc");
         $zcf = implode('', $tvarr[0]);
         preg_match_all($tvzz1, $zcf, $tvarr1);
         $jishu = $tvarr1[1];
         $b = $tvarr1[3];
         // $much = 1;
 
-        // $info = array(
-        //     $mvsrc,
-        //     $jian,
-        //     $timu,
-        //     $panduan,
-        //     $panduan1,
-        //     $zybiaoti,
-        //     $mvsrc1,
-        //     $jishu,
-        //     $b,
-        // );
+        $info = array(
+            $mvsrc,
+            $jian,
+            $timu,
+            $panduan,
+            $panduan1,
+            $zybiaoti,
+            $mvsrc1,
+            $jishu,
+            $b,
+        );
+        //print_r($info);
+
 
         $base = 'http://jx.vgoodapi.com/jx.php?url=';
+
         $infoList = array();
-        foreach($jishu as $index => $value) {
-            $name = $value;
-            $url = $b[$index];
-            $url = $base . $url;
-            $txt = "<a href='{$url}'>{$key}{$name}</a>";
+        if(empty($panduan)&&empty($panduan1)) {
+            $url = $base . $mvsrc1;
+            $txt = "<a href='{$url}'>{$key}</a>";
             $infoList[] = $txt;
         }
-        $infoList = array_slice($infoList, -10);
+        else {
+            foreach($jishu as $index => $value) {
+                $name = $value;
+                $url = $b[$index];
+                $url = $base . $url;
+                $txt = "<a href='{$url}'>{$key}{$name}</a>";
+                $infoList[] = $txt;
+            }
+            $infoList = array_slice($infoList, -10);
+        }
         $html = implode(" ",$infoList);
         return $html;
     }
 
     public function test() {
-        $key = '盗梦空间';
+        //$key = '盗梦空间';
+        $key = '白夜追凶';
+        //$key = '肖申克';
         $html = $this->getList($key);
         echo $html;
         //print_r($infoList);
