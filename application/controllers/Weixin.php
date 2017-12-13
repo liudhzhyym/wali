@@ -143,7 +143,7 @@ class Weixin extends CI_Controller{
                 $html = $this->getList($content);
                 log_message("debug","len is ".strlen($html));
                 if(empty($html)) {
-                    $html = "没有找到资源 = =";
+                    $html = "没有找到资源 = =，请直接输入电影/电视剧名字~";
                 }
                 
                 $this->ci_wechat->text($html)->reply();
